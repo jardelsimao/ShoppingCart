@@ -1,22 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="shoppingCart">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Shopping Cart teste</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    <title>Shopping Cart Test</title>
+    <link href="lib/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
   </head>
-  <body>
-    <h1>Hello, world!</h1>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.6/angular.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <body ng-controller="shoppingCartCtrl">
+    <div class="container">
+      <h1>{{message}}</h1>
+      <div class="col-md-8">
+        <div class="panel panel-default">
+          <div class="panel-heading">{{productlist}}</div>
+          <div class="panel-body">
+            <ul class="product-list">
+              <li class="product-item" ng-repeat="product in products">
+                <h4>{{product.name}}</h4>
+                <img class="img-thumbnail" ng-src="{{product.image}}">
+                <div class="product-item-price">{{product.price}}</div>
+                <a class="btn btn-large btn-block btn-primary" ng-click="buy(product.id)">Buy</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="panel panel-default">
+          <div class="panel-heading">{{basket}}</div>
+          <div class="panel-body">
+            Panel content
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="lib/jquery.js"></script>
+    <script src="lib/angular.js"></script>
+    <script src="lib/bootstrap.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/services/shoppingCartApi.js"></script>
+    <script src="js/controllers/shoppingCartCtrl.js"></script>
   </body>
 </html>

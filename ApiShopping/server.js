@@ -4,18 +4,30 @@ var app = express();
 
 app.use(bodyParser.json());
 
-var operadoras = [
-	{nome: "Oi", codigo: 14, categoria: "Celular", preco: 2},
-	{nome: "Vivo", codigo: 15, categoria: "Celular", preco: 1},
-	{nome: "Tim", codigo: 41, categoria: "Celular", preco: 3},
-	{nome: "GVT", codigo: 25, categoria: "Fixo", preco: 1},
-	{nome: "Embratel", codigo: 21, categoria: "Fixo", preco: 2}
+var commerceitem = [
+  {id:"01", product_id:"01", quantity:1, amount:220.000000},
+  {id:"02", product_id:"02", quantity:1, amount:220.000000},
+  {id:"03", product_id:"03", quantity:1, amount:220.000000},
+  {id:"04", product_id:"04", quantity:1, amount:220.000000}
 ];
 
-var contatos = [
-  {id: 1, nome: "Bruno", telefone: "9999-2222", data: new Date(), operadora: operadoras[0]},
-  {id: 2, nome: "Sandra", telefone: "9999-3333", data: new Date(), operadora: operadoras[1]},
-  {id: 3, nome: "Mariana", telefone: "9999-9999", data: new Date(), operadora: operadoras[2]}
+var product = [
+  {id:"01", name:"produto01", image:"img/img.jpg", price:50.000000},
+  {id:"02", name:"produto02", image:"img/img.jpg", price:50.000000},
+  {id:"03", name:"produto03", image:"img/img.jpg", price:50.000000},
+  {id:"04", name:"produto04", image:"img/img.jpg", price:50.000000},
+  {id:"05", name:"produto05", image:"img/img.jpg", price:50.000000}
+
+]
+
+var shoppingcart = [
+  {items:[
+      {id:"01", product_id:"01", quantity:1, amount:220.000000},
+      {id:"01", product_id:"01", quantity:1, amount:220.000000},
+      {id:"01", product_id:"01", quantity:1, amount:220.000000}
+    ]
+  },
+  {amount:220.000000}
 ];
 
 app.all('*', function(req, res, next) {
@@ -25,33 +37,41 @@ app.all('*', function(req, res, next) {
   next();
 });
 
-app.get('/contatos', function(req, res) {
-  res.json(contatos);
+app.get('/commerceitem', function(req, res) {
+  res.json(commerceitem);
 });
 
-app.get('/contatos/:id', function(req, res) {
-  contatos.forEach(function (contato) {
-  	if (contato.id == req.params.id) {
-  		res.json(contato);
-  		return;
-  	}
+app.post('/commerceitem', function(req, res) {
+  commerceitem.push(req.body);
+  res.json(true);
+});
+
+app.get('/product', function(req, res) {
+  res.json(product);
+});
+
+app.get('/product/:id', function(req, res) {
+  product.forEach(function (product) {
+    if (product.id == req.params.id) {
+      res.json(product);
+      return;
+    }
   });
   res.status(404).end();
 });
 
-app.post('/contatos', function(req, res) {
-  contatos.push(req.body);
-  res.json(true);
+app.get('/shoppingcart', function(req, res) {
+  res.json(shoppingcart);
 });
 
-app.get('/operadoras', function(req, res) {
-  res.json(operadoras);
-});
-
-app.engine('html', require('ejs').renderFile);
-
-app.get('/', function(req, res) {
-  res.render('index.html');
+app.get('/shoppingcart/:id', function(req, res) {
+  shoppingcart.forEach(function (shoppingcart) {
+    if (shoppingcart.id == req.params.id) {
+      res.json(shoppingcart);
+      return;
+    }
+  });
+  res.status(404).end();
 });
 
 app.listen(process.env.PORT || 3412);
